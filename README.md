@@ -37,12 +37,55 @@ The security of RSA relies on the difficulty of factoring large numbers; thus, c
 
 ## Program:
 
+```
 
+#include <stdio.h>
+int main()
+{
+    int p, q, n, phi, e, d;
+    int msg, encrypted, decrypted;
+    int i;
+    printf("Enter two prime numbers: ");
+    scanf("%d %d", &p, &q);
+    n = p * q;
+    phi = (p - 1) * (q - 1);
+    e = 2;
+    while (e < phi)
+    {
+        int a = e, b = phi, r;
+        while (b != 0)
+        {
+            r = a % b;
+            a = b;
+            b = r;
+        }
+        if (a == 1)
+            break;
+        e++;
+    }
+    d = 1;
+    while ((d * e) % phi != 1)
+        d++;
+    printf("Enter message (number): ");
+    scanf("%d", &msg);
+    encrypted = 1;
+    for (i = 0; i < e; i++)
+        encrypted = (encrypted * msg) % n;
+    decrypted = 1;
+    for (i = 0; i < d; i++)
+        decrypted = (decrypted * encrypted) % n;
+    printf("\nPublic Key: (%d, %d)", e, n);
+    printf("\nPrivate Key: (%d, %d)", d, n);
+    printf("\nEncrypted Message: %d", encrypted);
+    printf("\nDecrypted Message: %d\n", decrypted);
+    return 0;
+}
 
+```
 
 ## Output:
 
-
+![alt text](image.png)
 
 ## Result:
  The program is executed successfully.
